@@ -122,3 +122,20 @@ public void Main()
 }
 
 
+
+SELECT CASE
+         WHEN EXISTS (
+             SELECT 1
+             FROM ZIP_EXTRACTION_LOG
+             WHERE SOURCE_PATH = :SourcePath
+               AND FILE_MODIFIED_DATE = :ModifiedDate
+               AND FILE_SIZE = :FileSize
+               AND STATUS = 'SUCCESS'
+         )
+         THEN 0
+         ELSE 1
+       END AS SHOULD_PROCESS
+FROM DUAL
+
+
+
